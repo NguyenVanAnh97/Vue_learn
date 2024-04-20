@@ -119,7 +119,4 @@ h3 {
   gap: 16px;
 }
 
-.add {
-  background-color: red;
-}
 </style>
