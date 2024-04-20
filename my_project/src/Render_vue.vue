@@ -118,4 +118,8 @@ h3 {
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
 }
+
+.test {
+  color: turquoise;
+}
 </style>
