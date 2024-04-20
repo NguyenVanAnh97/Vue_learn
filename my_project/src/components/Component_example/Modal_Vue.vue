@@ -1,23 +1,39 @@
 <template>
     <div>
-        <div>
-            <b-button>Button</b-button>
-            <b-button variant="danger">Button</b-button>
-            <b-button variant="success">Button</b-button>
-            <b-button variant="outline-primary">Button</b-button>
-        </div>
-
+        <b-button size="sm" @click="toggle">
+            {{ show ? 'Hide' : 'Show' }} Alert
+        </b-button>
+        <b-alert v-model="show" class="mt-3" dismissible @dismissed="dismissed">
+            Hello {{ name }}!
+        </b-alert>
     </div>
 </template>
 
 <script>
 export default {
-    setup() {
-
-
-        return {}
+    data() {
+    return {
+      name: 'BootstrapVue',
+      show: true
     }
+  },
+  watch: {
+    show(newVal) {
+      console.log('Alert is now ' + (newVal ? 'visible' : 'hidden'))
+    }
+  },
+  methods: {
+    toggle() {
+      console.log('Toggle button clicked')
+      this.show = !this.show
+    },
+    dismissed() {
+      console.log('Alert dismissed')
+    }
+  },
+
+  compatConfig: { MODE: 3 }
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="scss" scoped></style>
