@@ -18,6 +18,10 @@
     color: #fff;
     padding: 10px 20px;
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 10px; 
+ }
+
+ .otherInfo > p {
+    margin-bottom: 14px;
  }
 </style>

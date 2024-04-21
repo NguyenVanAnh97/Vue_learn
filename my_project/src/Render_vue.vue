@@ -2,11 +2,11 @@
   <div>
     <h1 align="center">Render Component</h1>
     <div class="card-product card-container"> <!-- filter theo price > 200.00 bằng computed -->
-      <div class="info" v-for="item in companyComputed" :key="item.name" :class="{ purchase_car: item.isPurcharse.value }"
-        @dblclick="onToggleCart($event, item)">
+      <div class="info" v-for="item in companyComputed" :key="item.name"
+        :class="{ purchase_car: item.isPurcharse.value }" @dblclick="onToggleCart($event, item)">
         <img class="card-thumb" :src="item.thumb" :height="heightImg" :width="widthImg" />
         <h3>
-          Company: <span :style="{ color: item.name ? 'red' : '' }"> {{ item.name }}</span> 
+          Company: <span :style="{ color: item.name ? 'red' : '' }"> {{ item.name }}</span>
         </h3>
         <p>
           Price:
@@ -16,15 +16,24 @@
         </p>
 
         <hr />
-        <TitleCompany :inCome="item.inComeCpn" :yearOfEstablishment="item.yearOfEstablishmentCpn"/>
+        <TitleCompany :inCome="item.inComeCpn" :yearOfEstablishment="item.yearOfEstablishmentCpn" />
       </div>
     </div>
+  </div>
+  <div class="Model_section">
+    <ModelVue v-if="isShowModal" :title_header="'This is the title from Component'" :content_body="'Content MODAL'" @cancel="onToggleModal">
+      <label for="">Name</label>
+      <input type="password">
+    </ModelVue>
+
+    <button @click="onToggleModal" class="Toggle_modal">Toggle modal</button>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import TitleCompany from './TitleCompany.vue';
+import ModelVue from './components/Component_example/Modal_Vue.vue';
 let widthImg = 150,
   heightImg = 100
 let product = [
@@ -51,7 +60,7 @@ let product = [
     isPurcharse: ref(false),
     inComeCpn: "95,7B $",
     yearOfEstablishmentCpn: 1948
-    
+
   },
   {
     name: 'Mazda',
@@ -75,17 +84,35 @@ let onToggleCart = (event, product) => {
   product.isPurcharse.value = !product.isPurcharse.value
 }
 
+let isShowModal = ref(false);
+
 const filterPrice = (items) => {
   return items.filter((item) => item.price > 150.000)
 }
 
 let companyComputed = computed(() => {
- return filterPrice(product)
+  return filterPrice(product)
 })
- 
+
+let onToggleModal = () => {
+  isShowModal.value = !isShowModal.value
+}
+
 </script>
 
 <style lang="css" scoped>
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  color: steelblue;
+}
+
 .info {
   background: #8a6565;
   color: #fff;
@@ -103,7 +130,7 @@ hr {
 }
 
 h3 {
-  margin: 0;
+  margin: 0 0 10px;
 }
 
 .card-thumb {
@@ -121,5 +148,11 @@ h3 {
 
 .test {
   color: turquoise;
+}
+
+.Toggle_modal {
+  padding: 10px 10px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 </style>
