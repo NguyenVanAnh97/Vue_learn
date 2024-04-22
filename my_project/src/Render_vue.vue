@@ -20,11 +20,23 @@
       </div>
     </div>
   </div>
+  <div class="Model_section">
+    <Teleport to="body">
+      <ModelVue v-if="isShowModal" :title_header="'This is the title from Component'" :content_body="'Content MODAL'"
+        @cancel="onToggleModal">
+        <label for="">Name</label>
+        <input type="password">
+      </ModelVue>
+
+      <button @click="onToggleModal" class="Toggle_modal">Toggle modal</button>
+    </Teleport>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import TitleCompany from './TitleCompany.vue';
+import ModelVue from './components/Component_example/Modal_Vue.vue';
 let widthImg = 150,
   heightImg = 100
 let product = [
@@ -75,6 +87,8 @@ let onToggleCart = (event, product) => {
   product.isPurcharse.value = !product.isPurcharse.value
 }
 
+let isShowModal = ref(false);
+
 const filterPrice = (items) => {
   return items.filter((item) => item.price > 150.000)
 }
@@ -83,9 +97,25 @@ let companyComputed = computed(() => {
   return filterPrice(product)
 })
 
+let onToggleModal = () => {
+  isShowModal.value = !isShowModal.value
+}
+
 </script>
 
 <style lang="css" scoped>
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  color: steelblue;
+}
+
 .info {
   background: #8a6565;
   color: #fff;
@@ -103,7 +133,7 @@ hr {
 }
 
 h3 {
-  margin: 0;
+  margin: 0 0 10px;
 }
 
 .card-thumb {
@@ -119,4 +149,13 @@ h3 {
   gap: 16px;
 }
 
+.test {
+  color: turquoise;
+}
+
+.Toggle_modal {
+  padding: 10px 10px;
+  margin-top: 20px;
+  cursor: pointer;
+}
 </style>
