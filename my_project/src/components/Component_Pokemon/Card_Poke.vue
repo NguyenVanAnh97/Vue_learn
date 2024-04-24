@@ -3,12 +3,11 @@
         <div class="card__inner" :class="{ 'is-flipped': isFlipped }" @click="onToggleFlipCard">
             <div class="card__face card__face--front">
                 <div class="cart__content">
-                    Front
+
                 </div>
             </div>
             <div class="card__face card__face--back">
-                <div class="cart__content">
-                    Back
+                <div class="cart__content" :style="{ backgroundImage: `url('${('/src/assets/' + imgBackFaceUrl)}')` }">
                 </div>
             </div>
         </div>
@@ -18,6 +17,10 @@
 <script setup>
 import { ref } from 'vue';
 
+//tạo props imgBackFaceUrl để nhận giá trị từ component cha InteractScreen => lấy đường dẫn ảnh
+defineProps({
+    imgBackFaceUrl: { type: String, required: true }
+})
 const isFlipped = ref(false)
 
 const onToggleFlipCard = () => {
@@ -41,12 +44,12 @@ const onToggleFlipCard = () => {
     transform-style: preserve-3d;
     cursor: pointer;
     position: relative;
-  
+
 }
 
 .card__inner.is-flipped {
     transform: rotateY(-180deg);
-    
+
 }
 
 .card__face {
@@ -60,8 +63,23 @@ const onToggleFlipCard = () => {
     box-shadow: 0 3px 18px 3px rgba(0, 0, 0, 0.2);
 }
 
+.card__face--front .cart__content {
+    background: url("../../assets/images_pokemon/icon_back.png") no-repeat center center;
+    background-size: 50px auto;
+    width: 100%;
+    height: 100%;
+}
+
 .card__face--back {
     left: -35px;
     transform: rotateY(180deg);
+}
+
+.card__face--back .cart__content {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
 }
 </style>
