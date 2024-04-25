@@ -27,11 +27,10 @@ const onHandleBeforeStart = (config) => {
     const firstCard = Array.from({ length: settings.totalOfBlocks / 2 }, (_, i) => i + 1);
 
     const secondCards = [...firstCard]
-    const cards = [...firstCard, ...secondCards]
 
-    settings.cardContext = shuffled(cards)
+    settings.cardContext = shuffled([...firstCard, ...secondCards])
     console.log(settings.cardContext)
-    settings.startedAt = new Date().getTime();
+    settings.startedAt = new Date().getTime()
 
     //data ready
     statusMatch.value = "match"

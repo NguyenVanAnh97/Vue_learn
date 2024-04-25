@@ -2,7 +2,7 @@
     <div>
         <h1>Interact Component here...</h1>
 
-        <Card_Poke v-for="(card, index) in cardsContext" :key="index" :imgBackFaceUrl="`images_pokemon/${card}.png`"/>
+        <Card_Poke v-for="(card, index) in cardsContext" :key="index" :imgBackFaceUrl="`images_pokemon/${card}.png`" />
     </div>
 </template>
 
