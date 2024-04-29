@@ -38,7 +38,7 @@
     }
   })
   
-  // Khai báo sự kiện mà component có thể phát ra
+  // Khai báo sự kiện mà component có thể phát ra 
   const emit = defineEmits(['cancel']);
   let onCloseModal = () => {
     // Phát ra sự kiện 'cancel' bằng cách sử dụng biến emit

@@ -14,18 +14,48 @@
     </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
+export default {
+  props: {
+    card: {
+      type: [Array, String, Number, Object],
+    },
+    cardsContext: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    imgBackFaceUrl: {
+      type: String,
+      required: true,
+    },
+    rules: {
+      type: Array,
+    },
+  },
+  data() {
+    return {
+      isFlipped: false,
+      isDisabled: false,
+    };
+  },
+  methods: {
+    onToggleFlipCard() {
+    
+      this.isFlipped = !this.isFlipped;
+        this.$emit("onFlip", this.card);
+    },
 
-//tạo props imgBackFaceUrl để nhận giá trị từ component cha InteractScreen => lấy đường dẫn ảnh
-defineProps({
-    imgBackFaceUrl: { type: String, required: true }
-})
-const isFlipped = ref(false)
+    onFlipBackCard() {
+      this.isFlipped = false;
+    },
 
-const onToggleFlipCard = () => {
-    isFlipped.value = !isFlipped.value
-}
+    onEnabledDisabledMode() {
+      this.isDisabled = true;
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
