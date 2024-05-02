@@ -1,9 +1,16 @@
 <template>
-    <div>
-        <h1>Interact Component here...</h1>
+    <div class="screen">
+        <div class="screen__inner" :style="{
+            width: `${((((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4 +
+                    16) *
+                Math.sqrt(cardsContext.length)
+                }px`,
+        }">
+            <Card_Poke v-for="(card, index) in cardsContext" :key="index" :imgBackFaceUrl="`images_pokemon/${card}.png`"
+                :card="{ index, value: card }" @onFlip="checkRule($event)" :ref="`card-${index}`"
+                :cardsContext="cardsContext" />
 
-        <Card_Poke v-for="(card, index) in cardsContext" :key="index" :imgBackFaceUrl="`images_pokemon/${card}.png`"
-            :card="{ index, value: card }" @onFlip="checkRule($event)" :ref="`card-${index}`" />
+        </div>
     </div>
 </template>
 
@@ -31,33 +38,60 @@ export default {
         checkRule(card) {
             if (this.rules.length == 2) return false
             this.rules.push(card)
-            console.log(this.rules)
-            console.log(this.$refs[`card-${this.rules[0].index}`])
+            //console.log(this.rules)
+
 
             if (this.rules.length == 2 && this.rules[0].value === this.rules[1].value) {
-                console.log("Right...", this.rules[0].value)
+                this.$refs[`card-${this.rules[0].index}`][0].onEnableDisabledMode()
+                this.$refs[`card-${this.rules[1].index}`][0].onEnableDisabledMode()
+
+                this.rules = []
+
+                const disabledElemements = document.querySelectorAll(".screen .card.disabled");
+                if (disabledElemements && disabledElemements.length === this.cardsContext.length - 2) {
+                    setTimeout(() => {
+                        this.$emit("onFinish")
+                    }, 920);
+                }
             } else if (this.rules.length == 2 && this.rules[0].value !== this.rules[1].value) {
                 console.log("Wrong...");
                 // đóng hai thẻ nếu chọn sai
 
-                this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard()
-                this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard()
+                setTimeout(() => {
+                    this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard()
+                    this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard()
 
-
-
-
-                this.rules = []
+                    this.rules = []
+                }, 700);
             } else {
                 return false
             }
         }
 
-        
+
     },
 
-   
+
 }
 
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.screen {
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.screen__inner {
+    width: 424px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem auto;
+}
+</style>
