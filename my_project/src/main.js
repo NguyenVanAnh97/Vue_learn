@@ -6,8 +6,10 @@ import { createApp } from 'vue'
 /*import Event_vue3 from './Event_vue3.vue' mouse_event*/
 /* import Render_vue3 from './Render_vue.vue' render, teleport, slot, emit*/
 
-import Pokemon from './Pokemon_Temp.vue'
+//game pokemon 
+/*import Pokemon from './Pokemon_Temp.vue'*/
+import Quick_Form from './components/Form_example/Quick_form.vue'
 import "./assets/global.css"
 
-createApp(Pokemon).mount('#app')
+createApp(Quick_Form).mount('#app')
 
