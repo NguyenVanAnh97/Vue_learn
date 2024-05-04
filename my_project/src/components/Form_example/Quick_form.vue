@@ -14,20 +14,17 @@
                         <div class="form-group">
                             <div class="form-item col">
                                 <label for="name">What is your full name?</label>
-                                <input id="name" type="text" placeholder="John Smith" v-model="quiz.fullName.value" />
-                                <p class="error-text"></p>
-                                <p class="success-text">
-
+                                <input id="name" :class="{ error: error.status, success: success.status }" type="text"
+                                    placeholder="John Smith" v-model="quiz.fullName.value" />
+                                <p class="error-text" v-if="error.status">{{ error.text }}</p>
+                                <p class="success-text" v-if="success.status">
+                                    {{ success.text }}
                                 </p>
-
-                                {{ quiz.fullName.value }}
                             </div>
                             <div class="form-item col">
                                 <label for="email">What is your email address?</label>
                                 <input id="email" type="email" placeholder="skyalbert.960@gmail.com"
                                     v-model="quiz.email.value" />
-
-                                {{ quiz.email.value }}
                             </div>
                         </div>
                     </div>
@@ -37,11 +34,12 @@
                             about our services
                         </p>
                         <div class="row">
-                            <div class="col-4" v-for="option in jobOptions" :key="option.id"> 
-                                <div class="block" :style="{backgroundColor: quiz.jobs.value.includes(option.id) ? 'var(--primary)' : ''}">
+                            <div class="col-4" v-for="option in jobOptions" :key="option.id">
+                                <div class="block"
+                                    :style="{ backgroundColor: quiz.jobs.value.includes(option.id) ? 'var(--primary)' : '' }">
                                     <label class="option">
                                         <span>{{ option.name }}</span>
-                                        <input type="checkbox" v-model="quiz.jobs.value" :value="option.id"/>
+                                        <input type="checkbox" v-model="quiz.jobs.value" :value="option.id" />
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -130,6 +128,11 @@ let error = {
     status: ref(false)
 }
 
+let success = {
+    text: ref(""),
+    status: ref(false)
+}
+
 const jobOptions = [{
     id: 1,
     name: "Branding",
@@ -169,9 +172,15 @@ const jobOptions = [{
 
 const onSubmit = () => {
     console.log(quiz);
-    if(quiz.fullName.value.length < 6 || quiz.fullName.value.length > 18){
+    if (quiz.fullName.value.length < 6 || quiz.fullName.value.length > 18) {
         error.text = "Có vẻ lỗi, tên đầy đủ cần từ 6 đến 18 kí tự"
-
+        error.status = true
+    } else if (quiz.fullName.value.length > 5 && quiz.fullName.value.length < 19) {
+        success.text = "Trông ổn đấy"
+        success.status = true
+    } else {
+        error.text = ""
+        error.status = false
     }
 }
 
