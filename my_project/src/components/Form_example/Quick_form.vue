@@ -14,11 +14,11 @@
                         <div class="form-group">
                             <div class="form-item col">
                                 <label for="name">What is your full name?</label>
-                                <input id="name" :class="{ error: error.status, success: success.status }" type="text"
+                                <input id="name" :class="{ error: error.status.value, success: success.status.value }" type="text"
                                     placeholder="John Smith" v-model="quiz.fullName.value" />
-                                <p class="error-text" v-if="error.status">{{ error.text }}</p>
-                                <p class="success-text" v-if="success.status">
-                                    {{ success.text }}
+                                <p class="error-text" v-if="error.status.value">{{ error.text.value }}</p>
+                                <p class="success-text" v-if="success.status.value">
+                                    {{ success.text.value }}
                                 </p>
                             </div>
                             <div class="form-item col">
@@ -173,14 +173,14 @@ const jobOptions = [{
 const onSubmit = () => {
     console.log(quiz);
     if (quiz.fullName.value.length < 6 || quiz.fullName.value.length > 18) {
-        error.text = "Có vẻ lỗi, tên đầy đủ cần từ 6 đến 18 kí tự"
-        error.status = true
+        error.text.value = "Có vẻ lỗi, tên đầy đủ cần từ 6 đến 18 kí tự"
+        error.status.value = true
     } else if (quiz.fullName.value.length > 5 && quiz.fullName.value.length < 19) {
-        success.text = "Trông ổn đấy"
-        success.status = true
+        success.text.value = "Trông ổn đấy"
+        success.status.value = true
     } else {
-        error.text = ""
-        error.status = false
+        error.text.value = ""
+        error.status.value = false
     }
 }
 
