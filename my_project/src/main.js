@@ -7,9 +7,13 @@ import { createApp } from 'vue'
 /* import Render_vue3 from './Render_vue.vue' render, teleport, slot, emit*/
 
 //game pokemon 
-/*import Pokemon from './Pokemon_Temp.vue'*/
-import Quick_Form from './components/Form_example/Quick_form.vue'
-import "./assets/global.css"
+//import Pokemon from './Pokemon_Temp.vue'
+//import Quick_Form from './components/Form_example/Quick_form.vue'
+//import "./assets/global.css"
+import Apps from "./Apps.vue"
 
-createApp(Quick_Form).mount('#app')
+//use router
+import myRoute from '../router'
+
+createApp(Apps).use(myRoute).mount('#app')
 
