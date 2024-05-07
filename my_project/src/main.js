@@ -10,10 +10,12 @@ import { createApp } from 'vue'
 //import Pokemon from './Pokemon_Temp.vue'
 //import Quick_Form from './components/Form_example/Quick_form.vue'
 //import "./assets/global.css"
-import Apps from "./Apps_router.vue"
+//import Apps from "./Apps_router.vue"
+//import App_lifecycle from './components/Lifecycle_example/App_lifecycle.vue'
+import Apps_router from './Apps_router.vue'
 
 //use router
 import myRoute from '../router'
 
-createApp(Apps).use(myRoute).mount('#app')
+createApp(Apps_router).use(myRoute).mount('#app')
 

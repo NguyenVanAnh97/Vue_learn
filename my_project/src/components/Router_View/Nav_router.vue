@@ -1,9 +1,9 @@
 <template>
     <div>
         <nav class="nav">
-  
-            <RouterLink to="/">Overview</RouterLink>
-            <RouterLink to="/transaction">Transactions</RouterLink>
+
+            <RouterLink :to="{ name: 'overview-route' }">Overview</RouterLink>
+            <RouterLink :to="{ name: 'transaction-route' }">Transactions</RouterLink>
             <RouterLink to="/">Budgets</RouterLink>
             <RouterLink to="/">Reports</RouterLink>
             <RouterLink to="/">Settings</RouterLink>
@@ -20,7 +20,8 @@
 * {
     padding-top: 30px;
 }
- nav > a {
+
+nav>a {
     margin-right: 10px;
- }
+}
 </style>
