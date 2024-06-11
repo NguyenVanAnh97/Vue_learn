@@ -6,21 +6,21 @@
       <h3>Name: {{ transaction.name }}</h3>
       <p>Price: {{ transaction.price }}</p>
     </div>
-    <div v-else>Loading {{transactionId}}</div>
+    <div v-else>Loading {{ transactionId }}</div>
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
- 
-const transaction = ref(null)
+import { useStore } from "vuex"
+
+const store = useStore()
+
+const transaction = computed(() => store.state.transaction)
+
 const route = useRoute()
 const transactionId = ref(route.params.id)
 onMounted(() => {
-  fetch('http://localhost:3000/transactions/' + transactionId.value).then((response) => {
-    response.json().then((data) => {
-      transaction.value = data
-    })
-  })
+  store.dispatch('fetchTransaction', { id: transactionId.value }) 
 })
 </script>

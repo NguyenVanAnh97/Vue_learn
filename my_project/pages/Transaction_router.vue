@@ -7,7 +7,7 @@
     <div v-if="transaction.length">
       <div class="item" v-for="item in transaction" :key="item.id">
         <RouterLink :to="{ name: 'transaction-detail-route', params: { id: item.id } }">{{
-          item.named
+          item.name
         }}</RouterLink>
         <div class="price">Price: {{ item.price }}</div>
       </div>
@@ -42,9 +42,7 @@ const fetchData = async () => {
   }
 };
 
-onMounted(() => {
-  fetchData();
-})
+onMounted(fetchData)
 
 
 // Dữ liệu sẽ được fetch ngay khi component được mounted, giúp hiển thị dữ liệu người dùng nhanh chóng.
