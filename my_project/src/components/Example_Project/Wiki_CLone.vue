@@ -7,13 +7,24 @@
       <button type="submit">Search</button>
     </form>
 
-    <p v-if="isLoading">Loading...</p>
+    <!-- <h3 v-if="isLoading" class="loading">Loading...</h3> -->  
+    <div v-if="isLoading" class="loader">
+        <span>L</span>
+        <span>o</span>
+        <span>a</span>
+        <span>d</span>
+        <span>i</span>
+        <span>n</span>
+        <span>g</span>
+    </div>
     <p v-else-if="error">{{ error }}</p>
     <ul v-if="searchQueryResult.length" class="search-result">
       <li v-for="item in searchQueryResult" :key="item.pageid">
         <a :href="`https://en.wikipedia.org/?curid=${item.pageid}`" target="_blank">
           <h2>{{ item.title }}</h2>
-            {{ `https://en.wikipedia.org/?curid=${item.pageid}` }}
+          <p>
+            <u> {{ `https://en.wikipedia.org/?curid=${item.pageid}` }}</u>
+          </p>
         </a>
 
         <p>{{ item.link }}</p>
@@ -40,15 +51,14 @@ const isDarkTheme = ref(false)
 const searchWiki = async (query) => {
   const encodeQuery = encodeURIComponent(query)
   const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${encodeQuery}`
-
+  isLoading.value = true
   try {
     const res = await fetch(endpoint)
     const data = await res.json()
-    isLoading.value = true
+
     if (data.query && data.query.search) {
       searchQueryResult.value = data.query.search
       error.value = null
-      
     } else {
       searchQueryResult.value = []
       error.value = 'No result found'
@@ -90,6 +100,21 @@ body {
   height: 100%;
 }
 
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  text-align: center;
+  margin-top: 20px;
+  animation: loading 1s linear infinite;
+}
+
 .dark-theme {
   background-color: #333;
   color: #fff;
@@ -109,6 +134,12 @@ input[type='text'] {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
+  width: 400px;
+}
+
+input[type='text']:focus {
+  outline: none;
+  border-color: #4caf50;
 }
 
 button[type='submit'] {
@@ -121,7 +152,7 @@ button[type='submit'] {
 }
 
 .search-result {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
 ul {
@@ -152,5 +183,55 @@ button {
   position: absolute;
   top: 20px;
   right: 10px;
+}
+
+.loader {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    color: #4caf50;
+}
+
+.loader span {
+    animation: bounce 1.5s infinite;
+}
+
+.loader span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.loader span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.loader span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.loader span:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.loader span:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.loader span:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+        color: #4caf50;
+    }
+    40% {
+        transform: translateY(-20px);
+        color: #f44336;
+    }
+    60% {
+        transform: translateY(-10px);
+        color: #2196f3;
+    }
 }
 </style>
